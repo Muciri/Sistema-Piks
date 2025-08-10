@@ -23,10 +23,10 @@ public class Conta {
         this.cliente = cliente;
     }
 
-    public Conta(int id, Cliente cliente){
-        this.id = id;
-        this.saldo = 0;
-        this.cliente = cliente;
+    //toString
+    @Override
+    public String toString(){
+        return "{id: " +this.id + ", chavepiks: " + this.chavePiks + ", saldo: " + this.saldo + "}";
     }
 
     //getters e setters

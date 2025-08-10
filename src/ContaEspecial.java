@@ -13,9 +13,10 @@ public class ContaEspecial extends Conta{
         this.limite = limite;
     }
 
-    public ContaEspecial(int id, Cliente cliente, double limite) {
-        super(id, cliente);
-        this.limite = limite;
+    //toString
+    @Override
+    public String toString(){
+        return "{id: " +this.id + ", chavepiks: " + this.chavePiks + ", saldo: " + this.saldo + ", limite: " + this.limite + "}";
     }
 
     //método
