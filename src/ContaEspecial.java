@@ -13,6 +13,15 @@ public class ContaEspecial extends Conta{
         this.limite = limite;
     }
 
+    //getters e setters
+    public double getLimite() {
+        return limite;
+    }
+
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
+
     //toString
     @Override
     public String toString(){
