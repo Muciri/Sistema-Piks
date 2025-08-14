@@ -56,4 +56,9 @@ public class Conta {
         this.saldo -= valor;
         //this.lancamentos.add(new Lancamento(valor, "-")); //descomentar esta linha depois de implementar a classe Lancamento, e seu construtor
     }
+
+    public void tranferir(double valor, Conta destino) throws Exception{
+       this.debitar(valor);
+       destino.creditar(valor);
+    }
 }
