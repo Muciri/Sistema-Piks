@@ -17,11 +17,11 @@ public class Repositorio {
 
     //métodos gerais
     public static void adicionarConta(Conta conta) {
-        contasPIKS.put(conta.toString(), conta);
+        contasPIKS.put(conta.getChavePiks(), conta);
     }
 
     public static void removerConta(Conta conta) {
-        contasPIKS.remove(conta.toString());
+        contasPIKS.remove(conta.getChavePiks());
     }
 
     public static Conta localizarConta(String chavePiks){

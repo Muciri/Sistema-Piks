@@ -58,7 +58,11 @@ public class Conta {
     }
 
     public void tranferir(double valor, Conta destino) throws Exception{
-       this.debitar(valor);
-       destino.creditar(valor);
+        if(this.equals(destino)){
+            throw new Exception("As contas devem ser diferentes numa transferência");
+        }
+
+        this.debitar(valor);
+        destino.creditar(valor);
     }
 }
