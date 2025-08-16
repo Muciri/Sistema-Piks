@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Repositorio {
@@ -35,14 +40,87 @@ public class Repositorio {
     }
 
     public static void adicionarCliente(Cliente cliente){
-        //clientesCPF.put(cliente.getCPF(), cliente); //descomentar esta linha quando implementar a classe cliente e seus metodos
+        clientesCPF.put(cliente.getCPF(), cliente);
     }
 
     public static void removerCliente(Cliente cliente){
-        //clientesCPF.remove(cliente.getCPF()); //descomentar esta linha quando implementar a classe cliente e seus metodos
+        clientesCPF.remove(cliente.getCPF());
     }
 
-    public static void lerObjetos(){
-        //TO DO
+    public static void lerObjetos() {
+        try {
+            // caso os arquivos nao existam, serao criados vazios
+            File f1 = new File(new File(".\\contasPIKS.csv").getCanonicalPath());
+            File f2 = new File(new File(".\\lancamentos.csv").getCanonicalPath());
+            if (!f1.exists() || !f2.exists()) {
+                System.out.println("criando arquivo .csv vazio");
+                FileWriter arqconta = new FileWriter(f1);
+                FileWriter arqlancamento = new FileWriter(f2);
+                arqconta.close();
+                arqlancamento.close();
+                return;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("criacao dos arquivos vazios:" + ex.getMessage());
+        }
+
+        try {
+            int id;
+            double saldo, limite;
+            String linha;
+            String[] partes;
+            Cliente cliente;
+            Conta conta;
+            String chave, nome;
+            int cpf;
+
+            File f1 = new File(new File(".\\contasPIKS.csv").getCanonicalPath());
+            Scanner arqconta = new Scanner(f1);
+            System.out.println("Repositorio - lendo objetos...");
+            while (arqconta.hasNextLine()) {
+                linha = arqconta.nextLine().trim();
+                partes = linha.split(";");
+                //System.out.println(Arrays.toString(partes));
+                id = Integer.parseInt(partes[0]);
+                chave = partes[1];
+                saldo = Double.parseDouble(partes[2]);
+                limite = Double.parseDouble(partes[3]); // <>0=ContaEspecial
+                cpf = Integer.parseInt(partes[4]);
+                nome = partes[5];
+                cliente = new Cliente(cpf, nome);
+                if (limite == 0.0)
+                    conta = new Conta(id, chave, saldo);
+                else
+                    conta = new ContaEspecial(id, chave, saldo, limite);
+
+                cliente.setConta(conta);
+                conta.setCliente(cliente);
+                adicionarConta(conta);
+                adicionarCliente(cliente);
+            }
+            arqconta.close();
+
+            Lancamento lanc ;
+            LocalDateTime datahora;
+            double valor;
+            String tipo;
+            File f2 = new File(new File(".\\lancamentos.csv").getCanonicalPath());
+            Scanner arqlan = new Scanner(f2);
+            while (arqlan.hasNextLine()) {
+                linha = arqlan.nextLine().trim();
+                partes = linha.split(";");
+                //System.out.println(Arrays.toString(partes));
+                chave = partes[0];
+                datahora = LocalDateTime.parse(partes[1], DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+                valor = Double.parseDouble(partes[2]);
+                tipo = partes[3];
+                lanc = new Lancamento(datahora,valor,tipo);
+                conta = localizarConta(chave);
+                conta.adicionar(lanc);
+            }
+            arqlan.close();
+        } catch (Exception ex) {
+            throw new RuntimeException("leitura arquivo de contasPIKS:" + ex.getMessage());
+        }
     }
 }
