@@ -47,6 +47,45 @@ public class Repositorio {
         clientesCPF.remove(cliente.getCPF());
     }
 
+    
+    public static void gravarObjetos() {
+        // gravar nos arquivos csv os objetos que est�o no reposit�rio
+        try {
+            File f1 = new File(new File(".\\contasPIKS.csv").getCanonicalPath());
+            FileWriter arqconta = new FileWriter(f1);
+            File f2 = new File(new File(".\\lancamentos.csv").getCanonicalPath());
+            FileWriter arqlan = new FileWriter(f2);
+            String linha;
+            Double limite;
+            System.out.println("Repositorio - gravando objetos...");
+            for (Conta cta : contasPIKS.values()) {
+                if (cta instanceof ContaEspecial esp)
+                    limite = esp.getLimite();
+                else
+                    limite = 0.0;
+                linha = cta.getId()+ ";" + cta.getChavePiks() + ";" + cta.getSaldo() + ";" + limite + ";" +
+                        cta.getCliente().getCpf() + ";" + cta.getCliente().getNome();
+                arqconta.write(linha + "\n");
+                // System.out.println("linha="+linha);
+
+
+                if (!cta.getLancamentos().isEmpty())
+                    for (Lancamento lan : cta.getLancamentos()) {
+                        String s = lan.getDatahora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+                        arqlan.write(cta.getChavePiks()+";" +s+ ";"+ lan.getValor()+";"+lan.getTipo() +"\n");
+                    }
+               
+            }
+            arqconta.close();
+            arqlan.close();
+           
+        } catch (Exception e) {
+            throw new RuntimeException("problema na cria��o do arquivo  contasPIKS " + e.getMessage());
+        }
+
+
+    }
+    
     public static void lerObjetos() {
         try {
             // caso os arquivos nao existam, serao criados vazios
