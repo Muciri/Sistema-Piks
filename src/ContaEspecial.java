@@ -12,6 +12,11 @@ public class ContaEspecial extends Conta{
         super(id, chavePiks, cliente);
         this.limite = limite;
     }
+    
+    public ContaEspecial(int id, String chavePiks, double limite) {
+        super(id, chavePiks);
+        this.limite = limite;
+    }
 
     //getters e setters
     public double getLimite() {

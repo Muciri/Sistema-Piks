@@ -22,6 +22,12 @@ public class Conta {
         this.saldo = 0;
         this.cliente = cliente;
     }
+    
+    public Conta(int id, String chavePiks){
+        this.id = id;
+        this.chavePiks = chavePiks;
+        this.saldo = 0;
+    }
 
     //toString
     @Override
