@@ -109,7 +109,7 @@ public class Repositorio {
 			arqlan.close();
 
 		} catch (Exception e) {
-			throw new RuntimeException("problema na cria��o do arquivo  contasPIKS " + e.getMessage());
+			throw new RuntimeException("problema na criacao do arquivo  contasPIKS " + e.getMessage());
 		}
 
 

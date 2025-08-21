@@ -52,6 +52,6 @@ public class ContaEspecial extends Conta{
         }
 
         this.saldo -= valor;
-        //this.lancamentos.add(new Lancamento(valor, "-")); //descomentar esta linha quando implementar a classe Lancamento, e seu construtor
+        this.adicionar(new Lancamento(valor, "-"));
     }
 }
