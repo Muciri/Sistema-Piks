@@ -1,3 +1,9 @@
+/**
+ * SI - POO - Prof. Fausto Ayres
+ *
+ */
+package modelo;
+
 public class ContaEspecial extends Conta{
     //atributo
     private double limite;
@@ -17,7 +23,7 @@ public class ContaEspecial extends Conta{
         super(id, chavePiks, saldo);
         this.limite = limite;
     }
-    
+
     public ContaEspecial(int id, String chavePiks, double limite) {
         super(id, chavePiks);
         this.limite = limite;
