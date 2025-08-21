@@ -22,6 +22,12 @@ public class Conta {
         this.saldo = 0;
         this.cliente = cliente;
     }
+
+    public Conta(int id, String chavePiks, double saldo){
+        this.id = id;
+        this.chavePiks = chavePiks;
+        this.saldo = saldo;
+    }
     
     public Conta(int id, String chavePiks){
         this.id = id;
@@ -71,9 +77,9 @@ public class Conta {
     }
 
     //métodos gerais
-    public void creditar(double valor){
+    public void creditar(double valor) throws Exception {
         this.saldo += valor;
-        //this.lancamentos.add(new Lancamento(valor, "+")); //descomentar esta linha depois de implementar a classe Lancamento, e seu construtor
+        this.adicionar(new Lancamento(valor, "+"));
     }
 
     public void debitar(double valor) throws Exception{
@@ -82,14 +88,14 @@ public class Conta {
         }
         
         this.saldo -= valor;
-        //this.lancamentos.add(new Lancamento(valor, "-")); //descomentar esta linha depois de implementar a classe Lancamento, e seu construtor
+        this.adicionar(new Lancamento(valor, "-"));
     }
 
     public void adicionar(Lancamento lanc) {
     	this.lancamentos.add(lanc);
     }
     
-    public void tranferir(Conta destino,double valor) throws Exception{
+    public void transferir(Conta destino, double valor) throws Exception{
         if(this.equals(destino)){
             throw new Exception("As contas devem ser diferentes numa transferência");
         }

@@ -15,6 +15,15 @@ public class Lancamento {
     	this.valor = valor;
     	this.tipo = tipo;
     }
+
+	public Lancamento(double valor, String tipo) throws Exception {
+		if(!tipo.equals("+") && !tipo.equals("-")) {
+			throw new Exception("Tipo deve ser '+' (crédito) ou '-' (débito)");
+		}
+		this.dataHora = LocalDateTime.now();
+		this.valor = valor;
+		this.tipo = tipo;
+	}
     //toString
 	@Override
 	public String toString() {
@@ -22,7 +31,7 @@ public class Lancamento {
 	}
 
 	//getters e setters
-	public LocalDateTime getDataHora() {
+	public LocalDateTime getDatahora() {
 		return dataHora;
 	}
 

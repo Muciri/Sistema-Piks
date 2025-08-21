@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -40,13 +41,29 @@ public class Repositorio {
     }
 
     public static void adicionarCliente(Cliente cliente){
-        clientesCPF.put(cliente.getCPF(), cliente);
+        clientesCPF.put(cliente.getCpf(), cliente);
     }
 
     public static void removerCliente(Cliente cliente){
-        clientesCPF.remove(cliente.getCPF());
+        clientesCPF.remove(cliente.getCpf());
     }
 
+    public static Cliente localizarCliente(int cpf) {
+        for(Cliente cliente : clientesCPF.values()) {
+            if(cliente.getCpf() == cpf) {
+                return cliente;
+            }
+        }
+        return null; //se o cliente não for encontrado, retorna null
+    }
+
+    public static ArrayList<Conta> getContas() {
+        return new ArrayList<>(contasPIKS.values());
+    }
+
+    public static ArrayList<Cliente> getClientes() {
+        return new ArrayList<>(clientesCPF.values());
+    }
     
     public static void gravarObjetos() {
         // gravar nos arquivos csv os objetos que est�o no reposit�rio
