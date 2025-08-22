@@ -42,16 +42,10 @@ public class Repositorio {
 		contasPIKS.remove(conta.getChavePiks());
 	}
 
-	public static Conta localizarConta(String chavePiks){
-		for(Conta conta: contasPIKS.values()) {
-			if(conta.getChavePiks().equals(chavePiks)){
-				return conta;
-			}
-		}
-
-		return null; //se a conta não for encontrada, retorna null
+	public static Conta localizarConta(String chavePiks) {
+		return contasPIKS.get(chavePiks);
 	}
-
+	
 	public static void adicionarCliente(Cliente cliente){
 		clientesCPF.put(cliente.getCpf(), cliente);
 	}
@@ -61,14 +55,9 @@ public class Repositorio {
 	}
 
 	public static Cliente localizarCliente(int cpf) {
-		for(Cliente cliente : clientesCPF.values()) {
-			if(cliente.getCpf() == cpf) {
-				return cliente;
-			}
-		}
-		return null; //se o cliente não for encontrado, retorna null
+		return clientesCPF.get(cpf);
 	}
-
+	
 	public static ArrayList<Conta> getContas() {
 		return new ArrayList<>(contasPIKS.values());
 	}
